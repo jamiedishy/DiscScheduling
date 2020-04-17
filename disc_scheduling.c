@@ -10,10 +10,13 @@
 
 int requestsArray[25];
 
+int indexLower = 0;
+int indexLarger = 0;
+
 FILE *input_file_pointer;
 FILE *output_file_pointer;
 
-void fcfs(int * rArray) {
+void fcfs() {
     int headMovement = 0;
     int hPosition = HEADPOSITION;
     fprintf(output_file_pointer, "\nFCFS Algorithm\n");
@@ -27,9 +30,76 @@ void fcfs(int * rArray) {
     	headMovement += abs(requestsArray[i] - hPosition);
         hPosition = requestsArray[i];
     }
-    
+
     fprintf(output_file_pointer, "Total head movement for FCFS = %d\n", headMovement);
 }
+
+void scan() {
+    int headMovement = 0;
+    int hPosition = HEADPOSITION;
+
+    fprintf(output_file_pointer, "\nSCAN Algorithm\n");
+    fprintf(output_file_pointer, "Initial head position = %d\n", HEADPOSITION);
+    fprintf(output_file_pointer, "Seek Sequence is:\n");
+    
+    for (int i = indexLower; i >= 0; i--) {
+        fprintf(output_file_pointer, "%d\n", requestsArray[i]);
+        headMovement += abs(requestsArray[i] - hPosition);
+        hPosition = requestsArray[i];
+    }
+
+    for (int i = indexLarger; i < 25; i++) {
+        fprintf(output_file_pointer, "%d\n", requestsArray[i]);
+        headMovement += abs(requestsArray[i] - hPosition);
+        hPosition = requestsArray[i];
+    }    
+    
+    fprintf(output_file_pointer, "Total head movement for SCAN = %d\n", headMovement);
+}
+
+void cscan() {
+    int headMovement = 0;
+    int hPosition = HEADPOSITION;
+    fprintf(output_file_pointer, "\nC_SCAN Algorithm\n");
+    fprintf(output_file_pointer, "Initial head position = %d\n", HEADPOSITION);
+    fprintf(output_file_pointer, "Seek Sequence is:\n");
+
+    for (int i = 0; i < 25; i++) {
+        fprintf(output_file_pointer, "%d\n", requestsArray[i]);
+    }
+    for(int i = 0; i < 25; i++) {
+    	headMovement += abs(requestsArray[i] - hPosition);
+        hPosition = requestsArray[i];
+    }
+    
+    fprintf(output_file_pointer, "Total head movement for C_SCAN = %d\n", headMovement);
+}
+
+void sortArray() { // sorted in non-descending order 
+    int temp;
+    for (int i = 0; i < 25; i++) {
+        for (int j = 0; j < 25; j++) {
+            if (requestsArray[i] < requestsArray[j]) {
+                temp =  requestsArray[i];
+                requestsArray[i] = 	requestsArray[j];
+                requestsArray[j] = temp;
+            }
+        }
+    }
+    findIndices();
+}
+
+void findIndices() {
+    for (int i = 0; i < 25; i++) {
+        if (requestsArray[i] > HEADPOSITION) {
+            indexLarger = i;
+            indexLower = i-1;
+            printf("index lower is %d\n", indexLower); 
+            break;     
+        }
+    }
+}
+
 
 int main()
 {
@@ -54,11 +124,10 @@ int main()
         //fprintf(output_file_pointer, "%d\n", cylinder_request_value);
     }
 
-    fcfs(requestsArray);
-
-    // printf("FCFS head movements: %d\n", fcfs(ran_array));
-	// printf("SCAN head movements: %d\n", scan(ran_array));
-	// printf("CSCAN head movements: %d\n", cscan(ran_array));
+    fcfs();
+    sortArray();
+    scan();
+    cscan();
 
     return 0;
 }
