@@ -62,11 +62,6 @@ Total head movement for SCAN = 121
 C_SCAN Algorithm
 Initial head position = 33
 Seek Sequence is:
-5
-13
-19
-24
-32
 35
 36
 46
@@ -87,4 +82,9 @@ Seek Sequence is:
 91
 95
 98
-Total head movement for C_SCAN = 121
+5
+13
+19
+24
+32
+Total head movement for C_SCAN = 185

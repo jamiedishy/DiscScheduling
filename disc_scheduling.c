@@ -64,15 +64,19 @@ void cscan() {
     fprintf(output_file_pointer, "Initial head position = %d\n", HEADPOSITION);
     fprintf(output_file_pointer, "Seek Sequence is:\n");
 
-    for (int i = 0; i < 25; i++) {
+    for (int i = indexLarger; i < 25; i++) {
         fprintf(output_file_pointer, "%d\n", requestsArray[i]);
-    }
-    for(int i = 0; i < 25; i++) {
-    	headMovement += abs(requestsArray[i] - hPosition);
+        headMovement += abs(requestsArray[i] - hPosition);
         hPosition = requestsArray[i];
-    }
+    }   
+
+    for (int i = 0; i <= indexLower; i++) {
+        fprintf(output_file_pointer, "%d\n", requestsArray[i]);
+        headMovement += abs(requestsArray[i] - hPosition);
+        hPosition = requestsArray[i];
+    }    
     
-    fprintf(output_file_pointer, "Total head movement for C_SCAN = %d\n", headMovement);
+    fprintf(output_file_pointer, "Total head movement for C_SCAN = %d", headMovement);
 }
 
 void sortArray() { // sorted in non-descending order 
@@ -94,7 +98,6 @@ void findIndices() {
         if (requestsArray[i] > HEADPOSITION) {
             indexLarger = i;
             indexLower = i-1;
-            printf("index lower is %d\n", indexLower); 
             break;     
         }
     }
