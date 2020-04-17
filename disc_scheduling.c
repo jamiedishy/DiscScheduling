@@ -44,16 +44,13 @@ void scan() {
     
     for (int i = indexLower; i >= 0; i--) {
         fprintf(output_file_pointer, "%d\n", requestsArray[i]);
-        headMovement += abs(requestsArray[i] - hPosition);
-        hPosition = requestsArray[i];
     }
 
     for (int i = indexLarger; i < 25; i++) {
         fprintf(output_file_pointer, "%d\n", requestsArray[i]);
-        headMovement += abs(requestsArray[i] - hPosition);
-        hPosition = requestsArray[i];
     }    
     
+    headMovement = abs(0 - HEADPOSITION) + abs(0 - requestsArray[24]);
     fprintf(output_file_pointer, "Total head movement for SCAN = %d\n", headMovement);
 }
 
@@ -66,16 +63,13 @@ void cscan() {
 
     for (int i = indexLarger; i < 25; i++) {
         fprintf(output_file_pointer, "%d\n", requestsArray[i]);
-        headMovement += abs(requestsArray[i] - hPosition);
-        hPosition = requestsArray[i];
     }   
 
     for (int i = 0; i <= indexLower; i++) {
         fprintf(output_file_pointer, "%d\n", requestsArray[i]);
-        headMovement += abs(requestsArray[i] - hPosition);
-        hPosition = requestsArray[i];
     }    
-    
+
+    headMovement = abs(99-HEADPOSITION) + abs(99 - 0) + abs(requestsArray[indexLower] - 0);
     fprintf(output_file_pointer, "Total head movement for C_SCAN = %d", headMovement);
 }
 
