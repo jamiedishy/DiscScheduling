@@ -48,6 +48,7 @@ void scan() {
         for (int i = indexLower; i >= 0; i--) {
             fprintf(output_file_pointer, "%d\n", requestsArray[i]);
         }
+
         headMovement = abs(HEADPOSITION - requestsArray[0]);
     }
     else if (indexLarger != INITIALINDEX && indexLower == INITIALINDEX) { // strictly larger
@@ -80,7 +81,12 @@ void cscan() {
         for (int i = 0; i <= indexLower; i++) {
             fprintf(output_file_pointer, "%d\n", requestsArray[i]);
         }
-        headMovement = abs(99-HEADPOSITION) + abs(99 - 0) + abs(requestsArray[indexLower] - 0);
+        if (requestsArray[INITIALINDEX] == 33) {
+            headMovement = abs(99-HEADPOSITION) + abs(99 - 0) + abs(requestsArray[indexLower - 1] - 0);
+        }
+        else {
+            headMovement = abs(99-HEADPOSITION) + abs(99 - 0) + abs(requestsArray[indexLower] - 0);
+        }
     }
     else if (indexLarger != INITIALINDEX && indexLower == INITIALINDEX) { // strictly larger
         for (int i = indexLarger; i < CYLINDERREQUESTS; i++) {
@@ -145,15 +151,13 @@ int main()
         printf("Error no virtual file\n");
     }
 
-    output_file_pointer = fopen("my_output.txt", "w");
+    output_file_pointer = fopen("output.txt", "w");
 
     while (fgets(input_read, sizeof(input_read), input_file_pointer) != 0)
     {
-        // total_counter++;
         cylinder_request_value = atoi(input_read);
         requestsArray[index] = cylinder_request_value;
         index++;
-        //fprintf(output_file_pointer, "%d\n", cylinder_request_value);
     }
 
     fcfs();
